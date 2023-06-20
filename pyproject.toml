@@ -1,0 +1,21 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "django-quanttide"
+version = "0.1.0-alpha.1"
+description = "量潮Django SDK"
+authors = ["QuantTide Inc. <opensource@quanttide.com>"]
+license = "Apache 2.0"
+readme = "README.md"
+packages = [{include = "django_quanttide"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "3.0"
+djangorestframework = "3.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.2"
+coverage = "^7.2.7"
