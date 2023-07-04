@@ -136,6 +136,52 @@ class DescriptionField(models.TextField):
         super().__init__(**options)
 
 
+class TypeField(models.CharField):
+    """
+    类型字段
+
+    描述系统中而非用户自定义的分类，每个类型通常对应一个子类。
+    """
+    description = "类型字段"
+
+    def __init__(self, choices, default, **options):
+        options.setdefault('max_length', 50)
+        options.setdefault('choices', choices)
+        options.setdefault('default', default)
+        options.setdefault('verbose_name', '类型')
+        super().__init__(**options)
+
+
+class StatusField(models.CharField):
+    """
+    状态字段
+
+    描述系统中而非用户自定义的状态，用状态的变化来描述生命周期。
+    """
+    def __init__(self, choices, default=None , **options):
+        options.setdefault('max_length', 50)
+        options.setdefault('choices', choices)
+        options.setdefault('default', default)
+        options.setdefault('verbose_name', '状态')
+        super().__init__(**options)
+
+
+class StageField(models.IntegerField):
+    """
+    研发阶段字段
+
+    遵循PEP541对Development Status的定义，参见：
+    https://pypi.org/classifiers/
+    """
+    description = "研发阶段字段"
+
+    def __init__(self, **options):
+        from .choices import StageChoices
+        options.setdefault('choices', StageChoices.choices)
+        options.setdefault('default', StageChoices.PLANNING)
+        super().__init__(**options)
+
+
 class CreatedAtField(models.DateTimeField):
     """
     创建时间字段

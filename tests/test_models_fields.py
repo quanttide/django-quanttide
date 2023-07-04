@@ -3,7 +3,8 @@ import uuid
 from django.test import SimpleTestCase
 from django_quanttide.models import (
     IDField, NameField, VerboseNameField, TitleField, DescriptionField,
-    CreatedAtField, UpdatedAtField
+    TypeField, StatusField, StageField, StageChoices,
+    CreatedAtField, UpdatedAtField,
 )
 
 
@@ -90,15 +91,54 @@ class DescriptionFieldTestCase(SimpleTestCase):
         self.assertEqual(field.verbose_name, '关联描述')
 
 
+class TypeFieldTestCase(SimpleTestCase):
+
+    def test_defaults(self):
+        choices = (
+            ('book', 'Book'),
+            ('movie', 'Movie'),
+            ('music', 'Music')
+        )
+        field = TypeField(choices=choices, default='book')
+        self.assertIsInstance(field, TypeField)
+        self.assertEqual(field.max_length, 50)
+        self.assertEqual(field.choices, choices)
+        self.assertEqual(field.default, 'book')
+        self.assertEqual(field.verbose_name, '类型')
+
+
+class StatusFieldTestCase(SimpleTestCase):
+    def test_defaults(self):
+        choices = (
+            ('draft', 'Draft'),
+            ('published', 'Published'),
+            ('archived', 'Archived')
+        )
+        field = StatusField(choices=choices, default='draft')
+        self.assertIsInstance(field, StatusField)
+        self.assertEqual(field.max_length, 50)
+        self.assertEqual(field.choices, choices)
+        self.assertEqual(field.default, 'draft')
+        self.assertEqual(field.verbose_name, '状态')
+
+
+class StageFieldTestCase(SimpleTestCase):
+    def test_defaults(self):
+        field = StageField()
+        self.assertIsInstance(field, StageField)
+        self.assertEqual(field.choices, StageChoices.choices)
+        self.assertEqual(field.default, StageChoices.PLANNING)
+
+
 class CreatedAtFieldTestCase(SimpleTestCase):
     def test_defaults(self):
         """
         假设已知DateTimeField的功能和可靠性，本测试仅测试选项设置，集成到Model类时测试验证业务逻辑。
         """
         field = CreatedAtField()
-        self.assertTrue(field.auto_now)
-        self.assertFalse(field.auto_now_add)
-        self.assertEqual(field.verbose_name, '创建日期')
+        self.assertFalse(field.auto_now)
+        self.assertTrue(field.auto_now_add)
+        self.assertEqual(field.verbose_name, '创建时间')
 
 
 class UpdatedAtFieldTestCase(SimpleTestCase):
@@ -107,6 +147,6 @@ class UpdatedAtFieldTestCase(SimpleTestCase):
         假设已知DateTimeField的功能和可靠性，本测试仅测试选项设置，集成到Model类时测试验证业务逻辑。
         """
         field = UpdatedAtField()
-        self.assertFalse(field.auto_now)
-        self.assertTrue(field.auto_now_add)
-        self.assertEqual(field.verbose_name, '更新日期')
+        self.assertTrue(field.auto_now)
+        self.assertFalse(field.auto_now_add)
+        self.assertEqual(field.verbose_name, '更新时间')
