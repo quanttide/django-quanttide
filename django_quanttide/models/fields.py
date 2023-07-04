@@ -29,10 +29,10 @@ class IDField(models.UUIDField):
     description = 'ID字段'
 
     def __init__(self, **options):
-        options['primary_key'] = options.get('primary_key', True)
-        options['editable'] = options.get('editable', not options['primary_key'])
-        options['default'] = options.get('default', uuid.uuid4)
-        options['verbose_name'] = options.get('verbose_name', 'ID')
+        options.setdefault('primary_key', True)
+        options.setdefault('editable', not options['primary_key'])
+        options.setdefault('default', uuid.uuid4)
+        options.setdefault('verbose_name', 'ID')
         super().__init__(**options)
 
 
@@ -128,9 +128,43 @@ class DescriptionField(models.TextField):
     """
     description = "描述字段"
 
-    def __init__(self, **kwargs):
-        kwargs.setdefault('default', None)
-        kwargs.setdefault('blank', True)
-        kwargs.setdefault('null', True)
-        kwargs.setdefault('verbose_name', '描述')
-        super().__init__(**kwargs)
+    def __init__(self, **options):
+        options.setdefault('default', None)
+        options.setdefault('blank', True)
+        options.setdefault('null', True)
+        options.setdefault('verbose_name', '描述')
+        super().__init__(**options)
+
+
+class CreatedAtField(models.DateTimeField):
+    """
+    创建时间字段
+
+    :param auto_now_add: 如果为True，则字段将在对象第一次保存到数据库时自动设置为当前时间。默认为True。
+    :type auto_now_add: bool
+    :param verbose_name: 字段的可读名称，默认为“创建时间”。
+    :type verbose_name: str
+    """
+    description = "创建时间字段"
+
+    def __init__(self, **options):
+        options.setdefault('auto_now_add', True)
+        options.setdefault('verbose_name', '创建时间')
+        super().__init__(**options)
+
+
+class UpdatedAtField(models.DateTimeField):
+    """
+    更新时间字段
+
+    :param auto_now: 如果为True，则字段将在每次保存对象时自动设置为当前时间。默认为True。
+    :type auto_now: bool
+    :param verbose_name: 字段的可读名称，默认为“更新时间”。
+    :type verbose_name: str
+    """
+    description = "更新时间字段"
+
+    def __init__(self, **options):
+        options.setdefault('auto_now', True)
+        options.setdefault('verbose_name', '更新时间')
+        super().__init__(**options)

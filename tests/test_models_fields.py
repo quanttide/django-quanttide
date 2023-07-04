@@ -1,7 +1,11 @@
 import uuid
+from datetime import datetime
+import pytz
+
 from django.test import SimpleTestCase
 from django_quanttide.models import (
-    IDField, NameField, VerboseNameField, TitleField, DescriptionField
+    IDField, NameField, VerboseNameField, TitleField, DescriptionField,
+    CreatedAtField,
 )
 
 
