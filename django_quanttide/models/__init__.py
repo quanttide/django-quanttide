@@ -1,8 +1,9 @@
-from .fields import IDField
+from .fields import IDField, NameField
 from .models import Model
 
 
 __all__ = [
     'Model',
-    'IDField'
+    'IDField',
+    'NameField',
 ]

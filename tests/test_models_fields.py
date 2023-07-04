@@ -1,9 +1,9 @@
 import uuid
-from django.test import TestCase
-from django_quanttide.models import IDField
+from django.test import SimpleTestCase
+from django_quanttide.models import IDField, NameField
 
 
-class IDFieldTestCase(TestCase):
+class IDFieldTestCase(SimpleTestCase):
     def test_defaults(self):
         field = IDField()
         self.assertTrue(field.primary_key)
@@ -12,8 +12,22 @@ class IDFieldTestCase(TestCase):
         self.assertIsInstance(field.default(), uuid.UUID)
 
     def test_custom_options(self):
-        field = IDField(primary_key=False, verbose_name='Custom ID')
+        field = IDField(primary_key=False, verbose_name='关联ID')
         self.assertFalse(field.primary_key)
         self.assertTrue(field.editable)
-        self.assertEqual(field.verbose_name, 'Custom ID')
+        self.assertEqual(field.verbose_name, '关联ID')
         self.assertIsInstance(field.default(), uuid.UUID)
+
+
+class NameFieldTestCase(SimpleTestCase):
+    def test_defaults(self):
+        field = NameField()
+        self.assertEqual(field.max_length, 100)
+        self.assertTrue(field.unique)
+        self.assertEqual(field.verbose_name, '标识')
+
+    def test_custom_options(self):
+        field = NameField(max_length=150, unique=True, verbose_name='关联标识')
+        self.assertEqual(field.max_length, 150)
+        self.assertTrue(field.unique)
+        self.assertEqual(field.verbose_name, '关联标识')

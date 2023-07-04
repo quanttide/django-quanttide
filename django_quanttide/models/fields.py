@@ -11,6 +11,8 @@ class IDField(models.UUIDField):
     """
     ID字段
 
+    微服务系统内全局唯一。
+
     默认作为主键使用；
     不作为主键、作为关联ID使用时，设置`primary_key=False`，
     同时建议自定义`verbose_name`，格式为"<关联模型名称>ID"。
@@ -35,7 +37,24 @@ class IDField(models.UUIDField):
 
 
 class NameField(models.SlugField):
+    """
+    标识字段
+
+    租户内同模型唯一。
+
+    用于表示名称或标题的标识符字段，通常用于生成URL Slug。
+
+    :param max_length: 字段允许的最大长度，默认为100个字符。
+    :param unique: 如果为True，则该字段的值必须在整个模型中唯一。
+    :param verbose_name: 字段的可读名称，默认为“标识”。
+    """
+    description = "标识字段"
+
     def __init__(self, *args, **kwargs):
+        # ChatGPT建议的值是50-70，这里取了一个稍大的值。
+        kwargs.setdefault('max_length', 100)
+        kwargs.setdefault('unique', True)
+        kwargs.setdefault('verbose_name', '标识')
         super().__init__(*args, **kwargs)
 
 
