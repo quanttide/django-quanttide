@@ -19,3 +19,5 @@ djangorestframework = ">=3.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.2"
 coverage = "^7.2.7"
+pre-commit = "^3.3.3"
+tox = "^4.6.3"
