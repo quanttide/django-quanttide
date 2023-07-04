@@ -4,7 +4,16 @@
 
 from django.db import models
 
+from .fields import IDField
+
 
 class Model(models.Model):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    """
+    量潮Django Model类
+
+    使用UUID代替integer自增字段作为默认ID字段。
+    """
+    id = IDField()
+
+    class Meta:
+        abstract = True

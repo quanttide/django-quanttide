@@ -1,3 +1,7 @@
+"""
+数据模型选项
+"""
+
 from django.db import models
 
 

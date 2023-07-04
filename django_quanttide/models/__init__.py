@@ -1,3 +1,7 @@
+"""
+模型层
+"""
+
 from .choices import StageChoices
 from .fields import (
     IDField, NameField, VerboseNameField, TitleField, DescriptionField,

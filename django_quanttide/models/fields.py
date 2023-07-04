@@ -1,5 +1,5 @@
 """
-模型层字段
+数据模型字段
 """
 
 import uuid
@@ -158,7 +158,7 @@ class StatusField(models.CharField):
 
     描述系统中而非用户自定义的状态，用状态的变化来描述生命周期。
     """
-    def __init__(self, choices, default=None , **options):
+    def __init__(self, choices, default=None, **options):
         options.setdefault('max_length', 50)
         options.setdefault('choices', choices)
         options.setdefault('default', default)
