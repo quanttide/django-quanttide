@@ -45,19 +45,71 @@ class NameField(models.SlugField):
     用于表示名称或标题的标识符字段，通常用于生成URL Slug。
 
     :param max_length: 字段允许的最大长度，默认为100个字符。
-    :param unique: 如果为True，则该字段的值必须在整个模型中唯一。
+    :type max_length: int
+    :param unique: 字段的值是否在整个模型中唯一，默认为True。
+    :type unique: bool
     :param verbose_name: 字段的可读名称，默认为“标识”。
+    :type verbose_name: str
     """
     description = "标识字段"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **options):
         # ChatGPT建议的值是50-70，这里取了一个稍大的值。
-        kwargs.setdefault('max_length', 100)
-        kwargs.setdefault('unique', True)
-        kwargs.setdefault('verbose_name', '标识')
-        super().__init__(*args, **kwargs)
+        options.setdefault('max_length', 100)
+        options.setdefault('unique', True)
+        options.setdefault('verbose_name', '标识')
+        super().__init__(**options)
 
 
 class VerboseNameField(models.CharField):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    """
+    名称字段
+
+    :param max_length: 字段允许的最大长度，默认为100个字符。
+    :type max_length: int
+    :param default: 字段的默认值，默认为空字符串。
+    :type default: str
+    :param blank: 如果为True，则该字段允许为空值，默认为True。
+    :type blank: bool
+    :param null: 如果为True，则该字段允许为NULL值，默认为True。
+    :type null: bool
+    :param verbose_name: 字段的可读名称，默认为“标题”。
+    :type verbose_name: str
+    """
+    description = "名称字段"
+
+    def __init__(self, **options):
+        options.setdefault('max_length', 100)
+        options.setdefault('default', '')
+        options.setdefault('blank', True)
+        options.setdefault('null', True)
+        options.setdefault('verbose_name', '标题')
+        super().__init__(**options)
+
+
+class TitleField(models.CharField):
+    """
+    标题字段
+
+    :param max_length: 字段允许的最大长度，默认为255个字符。
+    :type max_length: int
+    :param default: 字段的默认值，默认为空字符串。
+    :type default: str
+    :param blank: 如果为True，则该字段允许为空值，默认为True。
+    :type blank: bool
+    :param null: 如果为True，则该字段允许为NULL值，默认为True。
+    :type null: bool
+    :param verbose_name: 字段的可读名称，默认为“标题”。
+    :type verbose_name: str
+    """
+    description = "标题字段"
+
+    def __init__(self, **options):
+        options.setdefault('max_length', 255)
+        options.setdefault('default', '')
+        options.setdefault('blank', True)
+        options.setdefault('null', True)
+        options.setdefault('verbose_name', '标题')
+        super().__init__(**options)
+
+
