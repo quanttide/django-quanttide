@@ -1,7 +1,7 @@
 import uuid
 from django.test import SimpleTestCase
 from django_quanttide.models import (
-    IDField, NameField, VerboseNameField, TitleField
+    IDField, NameField, VerboseNameField, TitleField, DescriptionField
 )
 
 
@@ -40,6 +40,7 @@ class VerboseNameFieldTestCase(SimpleTestCase):
     def test_defaults(self):
         field = VerboseNameField()
         self.assertEqual(field.max_length, 100)
+        self.assertIsNone(field.default)
         self.assertTrue(field.blank)
         self.assertTrue(field.null)
         self.assertEqual(field.verbose_name, '标题')
@@ -57,6 +58,7 @@ class TitleFieldTestCase(SimpleTestCase):
     def test_defaults(self):
         field = TitleField()
         self.assertEqual(field.max_length, 255)
+        self.assertIsNone(field.default)
         self.assertTrue(field.blank)
         self.assertTrue(field.null)
         self.assertEqual(field.verbose_name, '标题')
@@ -67,3 +69,20 @@ class TitleFieldTestCase(SimpleTestCase):
         self.assertFalse(field.blank)
         self.assertFalse(field.null)
         self.assertEqual(field.verbose_name, '关联标题')
+
+
+class DescriptionFieldTestCase(SimpleTestCase):
+
+    def test_defaults(self):
+        field = DescriptionField()
+        self.assertEqual(field.default, None)
+        self.assertTrue(field.blank)
+        self.assertTrue(field.null)
+        self.assertEqual(field.verbose_name, '描述')
+
+    def test_custom_options(self):
+        field = DescriptionField(default='test', blank=False, null=False, verbose_name='关联描述')
+        self.assertEqual(field.default, 'test')
+        self.assertFalse(field.blank)
+        self.assertFalse(field.null)
+        self.assertEqual(field.verbose_name, '关联描述')

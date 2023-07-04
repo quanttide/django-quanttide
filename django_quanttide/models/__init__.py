@@ -1,5 +1,5 @@
 from .fields import (
-    IDField, NameField, VerboseNameField, TitleField,
+    IDField, NameField, VerboseNameField, TitleField, DescriptionField
 )
 from .models import Model
 
@@ -10,4 +10,5 @@ __all__ = [
     'NameField',
     'VerboseNameField',
     'TitleField',
+    'DescriptionField',
 ]

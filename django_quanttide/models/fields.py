@@ -80,7 +80,7 @@ class VerboseNameField(models.CharField):
 
     def __init__(self, **options):
         options.setdefault('max_length', 100)
-        options.setdefault('default', '')
+        options.setdefault('default', None)
         options.setdefault('blank', True)
         options.setdefault('null', True)
         options.setdefault('verbose_name', '标题')
@@ -106,10 +106,31 @@ class TitleField(models.CharField):
 
     def __init__(self, **options):
         options.setdefault('max_length', 255)
-        options.setdefault('default', '')
+        options.setdefault('default', None)
         options.setdefault('blank', True)
         options.setdefault('null', True)
         options.setdefault('verbose_name', '标题')
         super().__init__(**options)
 
 
+class DescriptionField(models.TextField):
+    """
+    描述字段
+
+    :param default: 字段的默认值，默认为空字符串。
+    :type default: str
+    :param blank: 如果为True，则该字段允许为空值，默认为True。
+    :type blank: bool
+    :param null: 如果为True，则该字段允许为NULL值，默认为True。
+    :type null: bool
+    :param verbose_name: 字段的可读名称，默认为“描述”。
+    :type verbose_name: str
+    """
+    description = "描述字段"
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault('default', None)
+        kwargs.setdefault('blank', True)
+        kwargs.setdefault('null', True)
+        kwargs.setdefault('verbose_name', '描述')
+        super().__init__(**kwargs)
