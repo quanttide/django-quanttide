@@ -1,11 +1,9 @@
 import uuid
-from datetime import datetime
-import pytz
 
 from django.test import SimpleTestCase
 from django_quanttide.models import (
     IDField, NameField, VerboseNameField, TitleField, DescriptionField,
-    CreatedAtField,
+    CreatedAtField, UpdatedAtField
 )
 
 
@@ -90,3 +88,25 @@ class DescriptionFieldTestCase(SimpleTestCase):
         self.assertFalse(field.blank)
         self.assertFalse(field.null)
         self.assertEqual(field.verbose_name, '关联描述')
+
+
+class CreatedAtFieldTestCase(SimpleTestCase):
+    def test_defaults(self):
+        """
+        假设已知DateTimeField的功能和可靠性，本测试仅测试选项设置，集成到Model类时测试验证业务逻辑。
+        """
+        field = CreatedAtField()
+        self.assertTrue(field.auto_now)
+        self.assertFalse(field.auto_now_add)
+        self.assertEqual(field.verbose_name, '创建日期')
+
+
+class UpdatedAtFieldTestCase(SimpleTestCase):
+    def test_defaults(self):
+        """
+        假设已知DateTimeField的功能和可靠性，本测试仅测试选项设置，集成到Model类时测试验证业务逻辑。
+        """
+        field = UpdatedAtField()
+        self.assertFalse(field.auto_now)
+        self.assertTrue(field.auto_now_add)
+        self.assertEqual(field.verbose_name, '更新日期')
