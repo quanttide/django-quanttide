@@ -9,8 +9,6 @@ class ExampleModel(models.Model):
     type = models.TypeField(choices=[('book', 'Book'), ('movie', 'Movie'), ('music', 'Music')], default='book')
     status = models.StatusField(choices=[('draft', 'Draft'), ('published', 'Published'), ('archived', 'Archived')], default='draft')
     stage = models.StageField()
-    created_at = models.CreatedAtField()
-    updated_at = models.UpdatedAtField()
 
     class Meta:
         verbose_name = '示例模型'
@@ -19,8 +17,8 @@ class ExampleModel(models.Model):
 
 class ExamplePolymorphicModel(models.PolymorphicModel):
     TYPE_FIELD_MAPPINGS = {
-        'examplepolymorphicmodel': 'default',
-        'childmodel': 'child_model'
+        'ExamplePolymorphicModel': 'default',
+        'ChildModel': 'child_model'
     }
 
 

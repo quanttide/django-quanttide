@@ -6,7 +6,7 @@ from django.db import models
 
 from polymorphic.models import PolymorphicModel as BasePolymorphicModel
 
-from .fields import IDField
+from .fields import IDField, CreatedAtField, UpdatedAtField
 
 
 class Model(models.Model):
@@ -16,6 +16,8 @@ class Model(models.Model):
     使用UUID代替integer自增字段作为默认ID字段。
     """
     id = IDField()
+    created_at = CreatedAtField()
+    updated_at = UpdatedAtField()
 
     class Meta:
         abstract = True
@@ -34,14 +36,17 @@ class PolymorphicModel(BasePolymorphicModel):
     class Project(PolymorphicModel):
         TYPE_FIELD_MAPPINGS = {
             # 项目
-            'project': 'default',
+            'Project': 'default',
             # 项目集
-            'program': 'program',
+            'Program': 'program',
             # 项目组合
-            'projectportfolio': 'project_portfolio',
+            'ProjectPortfolio': 'project_portfolio',
         }
     ```
     """
+    id = IDField()
+    created_at = CreatedAtField()
+    updated_at = UpdatedAtField()
 
     # 类型字段映射表
     TYPE_FIELD_MAPPINGS = None
@@ -58,7 +63,9 @@ class PolymorphicModel(BasePolymorphicModel):
 
         :return: 类型值
         """
+        # 类名转小写，方便和ContentType.model字段对应
         if self.TYPE_FIELD_MAPPINGS:
-            return self.TYPE_FIELD_MAPPINGS.get(self.polymorphic_ctype.model, 'default')
+            convert_mappings = {key.lower(): value for key, value in self.TYPE_FIELD_MAPPINGS.items()}
+            return convert_mappings[self.polymorphic_ctype.model]
         else:
             return self.polymorphic_ctype.model

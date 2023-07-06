@@ -6,7 +6,8 @@ from .choices import StageChoices
 from .fields import (
     IDField, NameField, VerboseNameField, TitleField, DescriptionField,
     TypeField, StatusField, StageField,
-    CreatedAtField, UpdatedAtField
+    CreatedAtField, UpdatedAtField,
+    CreatedByField, UpdatedByField,
 )
 from .models import Model, PolymorphicModel
 
@@ -24,5 +25,7 @@ __all__ = [
     'StageField',
     'StageChoices',
     'CreatedAtField',
-    'UpdatedAtField'
+    'UpdatedAtField',
+    'CreatedByField',
+    'UpdatedByField',
 ]

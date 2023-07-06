@@ -5,6 +5,7 @@
 import uuid
 
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 class IDField(models.UUIDField):
@@ -214,3 +215,53 @@ class UpdatedAtField(models.DateTimeField):
         options.setdefault('auto_now', True)
         options.setdefault('verbose_name', '更新时间')
         super().__init__(**options)
+
+
+class CreatedByField(models.ForeignKey):
+    """
+    创建者字段
+
+    该字段用于记录创建该记录的用户。
+
+    :param to: 外键关联的用户模型。默认为 settings.AUTH_USER_MODEL。
+    :type to: str
+    :param on_delete: 外键关联的删除行为。默认为 PROTECT。
+    :type on_delete: ~typing.Optional[Callable[[], Any]]
+    :param null: 是否允许为空。默认为 True。
+    :type null: bool
+    :param verbose_name: 字段的可读名称。默认为“创建者”。
+    :type verbose_name: str
+    """
+    description = "创建者字段"
+
+    def __init__(self, **options):
+        user_model = options.pop('to', get_user_model())
+        on_delete = options.pop('on_delete', models.PROTECT)
+        options.setdefault('null', True)
+        options.setdefault('verbose_name', '创建者')
+        super().__init__(user_model, on_delete, **options)
+
+
+class UpdatedByField(models.ForeignKey):
+    """
+    更新者字段
+
+    该字段用于记录最后一次更新该记录的用户。
+
+    :param to: 外键关联的用户模型。默认为 settings.AUTH_USER_MODEL。
+    :type to: str
+    :param on_delete: 外键关联的删除行为。默认为 PROTECT。
+    :type on_delete: ~typing.Optional[Callable[[], Any]]
+    :param null: 是否允许为空。默认为 True。
+    :type null: bool
+    :param verbose_name: 字段的可读名称。默认为“更新者”。
+    :type verbose_name: str
+    """
+    description = "更新者字段"
+
+    def __init__(self, **options):
+        user_model = options.pop('to', get_user_model())
+        on_delete = options.pop('on_delete', models.PROTECT)
+        options.setdefault('null', True)
+        options.setdefault('verbose_name', '更新者')
+        super().__init__(user_model, on_delete, **options)

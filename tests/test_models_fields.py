@@ -1,10 +1,13 @@
 import uuid
 
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, modify_settings
+from django.contrib.auth import get_user_model
+
 from django_quanttide.models import (
     IDField, NameField, VerboseNameField, TitleField, DescriptionField,
     TypeField, StatusField, StageField, StageChoices,
     CreatedAtField, UpdatedAtField,
+    CreatedByField, UpdatedByField,
 )
 
 
@@ -150,3 +153,21 @@ class UpdatedAtFieldTestCase(SimpleTestCase):
         self.assertTrue(field.auto_now)
         self.assertFalse(field.auto_now_add)
         self.assertEqual(field.verbose_name, '更新时间')
+
+
+class CreatedByFieldTestCase(SimpleTestCase):
+    @modify_settings(INSTALLED_APPS={'append': 'django.contrib.auth'})
+    def test_defaults(self):
+        created_by_field = CreatedByField()
+        self.assertEqual(created_by_field.verbose_name, '创建者')
+        self.assertEqual(created_by_field.remote_field.model, get_user_model())
+        self.assertTrue(created_by_field.null)
+
+
+class UpdatedByFieldTestCase(SimpleTestCase):
+    @modify_settings(INSTALLED_APPS={'append': 'django.contrib.auth'})
+    def test_defaults(self):
+        updated_by_field = UpdatedByField()
+        self.assertEqual(updated_by_field.verbose_name, '更新者')
+        self.assertEqual(updated_by_field.remote_field.model, get_user_model())
+        self.assertTrue(updated_by_field.null)
