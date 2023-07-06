@@ -8,11 +8,12 @@ from .fields import (
     TypeField, StatusField, StageField,
     CreatedAtField, UpdatedAtField
 )
-from .models import Model
+from .models import Model, PolymorphicModel
 
 
 __all__ = [
     'Model',
+    'PolymorphicModel',
     'IDField',
     'NameField',
     'VerboseNameField',

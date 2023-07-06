@@ -15,3 +15,14 @@ class ExampleModel(models.Model):
     class Meta:
         verbose_name = '示例模型'
         verbose_name_plural = '示例模型列表'
+
+
+class ExamplePolymorphicModel(models.PolymorphicModel):
+    TYPE_FIELD_MAPPINGS = {
+        'examplepolymorphicmodel': 'default',
+        'childmodel': 'child_model'
+    }
+
+
+class ChildModel(ExamplePolymorphicModel):
+    pass
