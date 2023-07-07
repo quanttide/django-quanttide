@@ -24,6 +24,7 @@ class ModelTestCase(TestCase):
 
     def test_defaults(self):
         example = self.example
+        # self.assertEqual(example.number, 1)
         self.assertEqual(example.name, 'example')
         self.assertEqual(example.verbose_name, 'example instance')
         self.assertEqual(example.title, 'Example Model')

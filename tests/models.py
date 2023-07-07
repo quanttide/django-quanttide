@@ -2,6 +2,7 @@ from django_quanttide import models
 
 
 class ExampleModel(models.Model):
+    # number = models.NumberField()
     name = models.NameField()
     verbose_name = models.VerboseNameField()
     title = models.TitleField()
@@ -9,6 +10,8 @@ class ExampleModel(models.Model):
     type = models.TypeField(choices=[('book', 'Book'), ('movie', 'Movie'), ('music', 'Music')], default='book')
     status = models.StatusField(choices=[('draft', 'Draft'), ('published', 'Published'), ('archived', 'Archived')], default='draft')
     stage = models.StageField()
+    created_at = models.CreatedAtField()
+    updated_at = models.UpdatedAtField()
 
     class Meta:
         verbose_name = '示例模型'

@@ -16,8 +16,6 @@ class Model(models.Model):
     使用UUID代替integer自增字段作为默认ID字段。
     """
     id = IDField()
-    created_at = CreatedAtField()
-    updated_at = UpdatedAtField()
 
     class Meta:
         abstract = True
