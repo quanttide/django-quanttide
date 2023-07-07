@@ -37,6 +37,32 @@ class IDField(models.UUIDField):
         super().__init__(**options)
 
 
+class NumberField(models.IntegerField):
+    """
+    编号字段
+    """
+    description = "编号字段"
+
+    def __init__(self, **options):
+        options['editable'] = False
+        options['unique'] = True
+        options.setdefault('verbose_name', '编号')
+        super().__init__(**options)
+
+    def pre_save(self, model_instance, add):
+        value = getattr(model_instance, self.attname)
+        if not value:
+            # 如果字段值为空，则生成一个自增的值
+            queryset = model_instance.__class__.objects.all()
+            if queryset:
+                last_object = queryset.latest(self.attname)
+                value = getattr(last_object, self.attname) + 1
+            else:
+                value = 1
+            setattr(model_instance, self.attname, value)
+        return value
+
+
 class NameField(models.SlugField):
     """
     标识字段

@@ -1,8 +1,12 @@
 from django_quanttide import models
 
 
+class ExampleNumberModel(models.Model):
+    number = models.NumberField()
+
+
 class ExampleModel(models.Model):
-    # number = models.NumberField()
+    number = models.NumberField()
     name = models.NameField()
     verbose_name = models.VerboseNameField()
     title = models.TitleField()

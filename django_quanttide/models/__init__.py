@@ -4,7 +4,8 @@
 
 from .choices import StageChoices
 from .fields import (
-    IDField, NameField, VerboseNameField, TitleField, DescriptionField,
+    IDField, NumberField, NameField,
+    VerboseNameField, TitleField, DescriptionField,
     TypeField, StatusField, StageField,
     CreatedAtField, UpdatedAtField,
     CreatedByField, UpdatedByField,
@@ -16,6 +17,7 @@ __all__ = [
     'Model',
     'PolymorphicModel',
     'IDField',
+    'NumberField',
     'NameField',
     'VerboseNameField',
     'TitleField',

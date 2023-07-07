@@ -1,14 +1,17 @@
 import uuid
 
-from django.test import SimpleTestCase, modify_settings
+from django.test import SimpleTestCase, TestCase, modify_settings
 from django.contrib.auth import get_user_model
 
 from django_quanttide.models import (
-    IDField, NameField, VerboseNameField, TitleField, DescriptionField,
+    IDField, NumberField, NameField,
+    VerboseNameField, TitleField, DescriptionField,
     TypeField, StatusField, StageField, StageChoices,
     CreatedAtField, UpdatedAtField,
     CreatedByField, UpdatedByField,
 )
+
+from tests.models import ExampleNumberModel
 
 
 class IDFieldTestCase(SimpleTestCase):
@@ -25,6 +28,21 @@ class IDFieldTestCase(SimpleTestCase):
         self.assertTrue(field.editable)
         self.assertEqual(field.verbose_name, '关联ID')
         self.assertIsInstance(field.default(), uuid.UUID)
+
+
+class NumberFieldTestCase(TestCase):
+    def test_init(self):
+        field = NumberField()
+        self.assertFalse(field.editable)
+        self.assertTrue(field.unique)
+
+    def test_pre_save(self):
+        # 表为空
+        instance = ExampleNumberModel.objects.create()
+        self.assertEqual(1, instance.number)
+        # 表存在值
+        instance2 = ExampleNumberModel.objects.create()
+        self.assertEqual(2, instance2.number)
 
 
 class NameFieldTestCase(SimpleTestCase):
