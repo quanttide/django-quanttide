@@ -5,7 +5,7 @@
 from .choices import StageChoices
 from .fields import (
     IDField, NumberField, NameField,
-    VerboseNameField, TitleField, DescriptionField,
+    VerboseNameField, TitleField, DescriptionField, ReadmeField,
     TypeField, StatusField, StageField,
     CreatedAtField, UpdatedAtField,
     CreatedByField, UpdatedByField,
@@ -20,6 +20,7 @@ __all__ = [
     'VerboseNameField',
     'TitleField',
     'DescriptionField',
+    'ReadmeField',
     'TypeField',
     'StatusField',
     'StageField',

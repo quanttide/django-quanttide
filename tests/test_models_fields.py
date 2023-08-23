@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 from django_quanttide.models import (
     IDField, NumberField, NameField,
-    VerboseNameField, TitleField, DescriptionField,
+    VerboseNameField, TitleField, DescriptionField, ReadmeField,
     TypeField, StatusField, StageField, StageChoices,
     CreatedAtField, UpdatedAtField,
     CreatedByField, UpdatedByField,
@@ -110,6 +110,24 @@ class DescriptionFieldTestCase(SimpleTestCase):
         self.assertFalse(field.blank)
         self.assertFalse(field.null)
         self.assertEqual(field.verbose_name, '关联描述')
+
+
+class ReadmeFieldTestCase(SimpleTestCase):
+
+    def test_defaults(self):
+        field = ReadmeField()
+        self.assertEqual(field.default, None)
+        self.assertTrue(field.blank)
+        self.assertTrue(field.null)
+        self.assertEqual(field.verbose_name, '简介')
+
+    def test_custom_options(self):
+        field = ReadmeField(default='test', blank=False, null=False, verbose_name='关联简介')
+        self.assertEqual(field.default, 'test')
+        self.assertFalse(field.blank)
+        self.assertFalse(field.null)
+        self.assertEqual(field.verbose_name, '关联简介')
+
 
 
 class TypeFieldTestCase(SimpleTestCase):
