@@ -6,7 +6,7 @@ from django.db.utils import IntegrityError
 
 from tests.models import (
     ExampleModel,
-    ExamplePolymorphicModel, ChildModel
+    ParentModel, ChildModel
 )
 
 
@@ -57,13 +57,13 @@ class ModelTestCase(TestCase):
 
 class PolymorphicModelTestCase(TestCase):
     def setUp(self):
-        self.instance = ExamplePolymorphicModel.objects.create()
+        self.instance = ParentModel.objects.create()
         self.child_instance = ChildModel.objects.create()
 
     def test_default_type(self):
         # Test that the default type is returned when polymorphic_ctype is None
-        self.assertEqual('default', self.instance.type)
+        self.assertEqual('parentmodel', self.instance.type)
 
     def test_child_model_type(self):
         print(self.child_instance.__class__.__name__)
-        self.assertEqual('child_model', self.child_instance.type)
+        self.assertEqual('childmodel', self.child_instance.type)

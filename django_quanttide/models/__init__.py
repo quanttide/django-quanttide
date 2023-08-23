@@ -10,13 +10,11 @@ from .fields import (
     CreatedAtField, UpdatedAtField,
     CreatedByField, UpdatedByField,
 )
-from .models import Model, PolymorphicModel
-
+from .models import Model
+from .polymorphic import PolymorphicModel
 
 __all__ = [
-    'Model',
-    'PolymorphicModel',
-    'IDField',
+    'Model', 'IDField',
     'NumberField',
     'NameField',
     'VerboseNameField',

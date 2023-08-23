@@ -15,7 +15,10 @@ packages = [{include = "django_quanttide"}]
 python = "^3.8"
 Django = ">=3.1"
 djangorestframework = ">=3.0"
+
+[tool.poetry.dependencies.polymorphic]
 django-polymorphic = "^3.1.0"
+django-rest-polymorphic = "^0.1.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.2"

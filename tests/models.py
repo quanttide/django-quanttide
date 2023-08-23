@@ -22,12 +22,19 @@ class ExampleModel(models.Model):
         verbose_name_plural = '示例模型列表'
 
 
-class ExamplePolymorphicModel(models.PolymorphicModel):
-    TYPE_FIELD_MAPPINGS = {
-        'ExamplePolymorphicModel': 'default',
-        'ChildModel': 'child_model'
-    }
+class BaseParentModel(models.PolymorphicModel):
+    class Meta:
+        abstract = True
 
 
-class ChildModel(ExamplePolymorphicModel):
+class BaseChildModel(models.PolymorphicModel):
+    class Meta:
+        abstract = True
+
+
+class ParentModel(BaseParentModel):
+    pass
+
+
+class ChildModel(ParentModel):
     pass
