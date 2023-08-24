@@ -16,6 +16,7 @@ class ExampleModel(models.Model):
     stage = models.StageField()
     created_at = models.CreatedAtField()
     updated_at = models.UpdatedAtField()
+    related_id = models.IDField(primary_key=False, verbose_name='关联ID')
 
     class Meta:
         verbose_name = '示例模型'

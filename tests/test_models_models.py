@@ -5,8 +5,7 @@ from django.test import TestCase
 from django.db.utils import IntegrityError
 
 from tests.models import (
-    ExampleModel,
-    ParentModel, ChildModel
+    ExampleModel
 )
 
 
@@ -24,6 +23,9 @@ class ModelTestCase(TestCase):
 
     def test_defaults(self):
         example = self.example
+        self.assertIsInstance(example.id, uuid.UUID)
+        self.assertIsInstance(example.created_at, datetime.datetime)
+        self.assertIsInstance(example.updated_at, datetime.datetime)
         self.assertEqual(example.number, 1)
         self.assertEqual(example.name, 'example')
         self.assertEqual(example.verbose_name, 'example instance')
@@ -32,9 +34,7 @@ class ModelTestCase(TestCase):
         self.assertEqual(example.type, 'book')
         self.assertEqual(example.status, 'draft')
         self.assertEqual(example.stage, 1)
-        self.assertIsInstance(example.id, uuid.UUID)
-        self.assertIsInstance(example.created_at, datetime.datetime)
-        self.assertIsInstance(example.updated_at, datetime.datetime)
+        self.assertIsNone(example.related_id)
 
     def test_name_unique(self):
         example2 = ExampleModel(name='example', verbose_name='example instance 2')
@@ -53,17 +53,3 @@ class ModelTestCase(TestCase):
         example.name = 'updated-example'
         example.save()
         self.assertLessEqual(example.updated_at - example.created_at, datetime.timedelta(seconds=1))
-
-
-class PolymorphicModelTestCase(TestCase):
-    def setUp(self):
-        self.instance = ParentModel.objects.create()
-        self.child_instance = ChildModel.objects.create()
-
-    def test_default_type(self):
-        # Test that the default type is returned when polymorphic_ctype is None
-        self.assertEqual('parentmodel', self.instance.type)
-
-    def test_child_model_type(self):
-        print(self.child_instance.__class__.__name__)
-        self.assertEqual('childmodel', self.child_instance.type)

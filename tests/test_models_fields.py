@@ -15,19 +15,31 @@ from tests.models import ExampleNumberModel
 
 
 class IDFieldTestCase(SimpleTestCase):
-    def test_defaults(self):
+    def test_init_primary_key(self):
         field = IDField()
         self.assertTrue(field.primary_key)
         self.assertFalse(field.editable)
         self.assertEqual(field.verbose_name, 'ID')
         self.assertIsInstance(field.default(), uuid.UUID)
 
-    def test_custom_options(self):
+    def test_init_non_primary_key(self):
         field = IDField(primary_key=False, verbose_name='关联ID')
         self.assertFalse(field.primary_key)
         self.assertTrue(field.editable)
+        self.assertTrue(field.null)
+        self.assertTrue(field.blank)
+        self.assertIs(field.default, None)
         self.assertEqual(field.verbose_name, '关联ID')
-        self.assertIsInstance(field.default(), uuid.UUID)
+
+    def test_deconstruct_primary_key(self):
+        field = IDField()
+        name, path, args, kwargs = field.deconstruct()
+        self.assertIsInstance(kwargs['default'](), uuid.UUID)
+
+    def test_deconstruct_non_primary_key(self):
+        field = IDField(primary_key=False, verbose_name='关联ID')
+        name, path, args, kwargs = field.deconstruct()
+        self.assertIsNone(kwargs['default'])
 
 
 class NumberFieldTestCase(TestCase):

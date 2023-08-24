@@ -32,9 +32,19 @@ class IDField(models.UUIDField):
     def __init__(self, **options):
         options.setdefault('primary_key', True)
         options.setdefault('editable', not options['primary_key'])
-        options.setdefault('default', uuid.uuid4)
+        options.setdefault('null', not options['primary_key'])
+        options.setdefault('blank', not options['primary_key'])
+        options.setdefault('default', uuid.uuid4 if options['primary_key'] else None)
         options.setdefault('verbose_name', 'ID')
         super().__init__(**options)
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        # 将所有字段参数添加到 kwargs
+        for arg in ['primary_key', 'editable', 'null', 'blank', 'default', 'verbose_name']:
+            if hasattr(self, arg):
+                kwargs[arg] = getattr(self, arg)
+        return name, path, args, kwargs
 
 
 class NumberField(models.IntegerField):
