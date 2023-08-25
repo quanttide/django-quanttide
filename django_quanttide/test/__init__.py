@@ -1,7 +1,9 @@
-from .testcase import APITestCase
+from .models import ModelTestCase
+from .viewsets import ViewSetAPITestCase
 
 
 __all__ = [
     # TestCase类
-    'APITestCase',
+    'ModelTestCase',
+    'ViewSetAPITestCase',
 ]
