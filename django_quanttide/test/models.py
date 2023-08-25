@@ -16,11 +16,12 @@ class ModelTestCase(BaseTestCase):
         model_instance = self.model_class(**self.model_data)
         self.assertIsInstance(model_instance, self.model_class)
         # Test saving a model instance to the database
-        instance = self.model_class()
-        instance.save()
+        model_instance.save()
         # The primary key should be assigned after saving
         # The primary key should be a UUID
-        self.assertIsInstance(instance.pk, UUID)
+        self.assertIsInstance(model_instance.pk, UUID)
         # Suppose the get query method works
-        saved_instance = self.model_class.objects.get(pk=instance.pk)
-        self.assertEqual(instance, saved_instance)
+        saved_instance = self.model_class.objects.get(pk=model_instance.pk)
+        self.assertEqual(model_instance, saved_instance)
+        # Return it for more detailed tests
+        return model_instance
